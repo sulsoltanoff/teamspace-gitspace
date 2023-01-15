@@ -11,9 +11,10 @@ package org.corpspace.teamspace.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -27,57 +28,48 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate" }, allowGetters = true)
-public abstract class AbstractAuditingEntity<T> implements Serializable {
+public abstract class AbstractAuditingEntity<T> implements Serializable, Comparable<AbstractAuditingEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    public abstract T getId();
+    @Id
+    @GeneratedValue(generator = "entity_id")
+    @GenericGenerator(name = "entity_id", strategy = "org.corpspace.teamspace.domain.core.EntityIdGenerator")
+    @Getter
+    @Setter
+    private Long id;
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
+    @Getter
+    @Setter
     private String createdBy;
 
     @CreatedDate
     @Column(name = "created_date", updatable = false)
+    @Getter
+    @Setter
     private Instant createdDate = Instant.now();
 
     @LastModifiedBy
     @Column(name = "last_modified_by", length = 50)
+    @Getter
+    @Setter
     private String lastModifiedBy;
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
+    @Getter
+    @Setter
     private Instant lastModifiedDate = Instant.now();
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public int compareTo(AbstractAuditingEntity entity) {
+        if (getId() != null) {
+            if (entity.getId() != null) return getId().compareTo(entity.getId()); else return -1;
+        } else if (entity.getId() != null) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

@@ -9,12 +9,15 @@
 package org.corpspace.teamspace.domain.core;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 import org.bouncycastle.openpgp.PGPPublicKey;
 import org.corpspace.teamspace.domain.AbstractAuditingEntity;
+import org.corpspace.teamspace.util.GpgUtils;
 
 @MappedSuperclass
 public class BaseGpgKey extends AbstractAuditingEntity {
@@ -30,11 +33,6 @@ public class BaseGpgKey extends AbstractAuditingEntity {
 
     private transient List<PGPPublicKey> pgpPublicKeyList;
 
-    @Override
-    public Object getId() {
-        return null;
-    }
-
     @NotEmpty
     public String getContent() {
         if (content != null) return new String(content, StandardCharsets.UTF_8);
@@ -44,5 +42,14 @@ public class BaseGpgKey extends AbstractAuditingEntity {
     public void setContent(String content) {
         if (content != null) this.content = content.getBytes(StandardCharsets.UTF_8);
         this.content = null;
+    }
+
+    public List<PGPPublicKey> getPgpPublicKeyList() {
+        if (pgpPublicKeyList == null) pgpPublicKeyList = GpgUtils.parsePublicKey(getContent());
+        return pgpPublicKeyList;
+    }
+
+    public List<Long> getKeyIdList() {
+        return getPgpPublicKeyList().stream().map(PGPPublicKey::getKeyID).collect(Collectors.toList());
     }
 }
