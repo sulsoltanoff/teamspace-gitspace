@@ -8,9 +8,8 @@
 
 package org.corpspace.teamspace.domain;
 
-import javax.annotation.Nullable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
@@ -18,12 +17,25 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Table(name = "ssh_key")
 public class SshKey extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue
+    @JsonIgnore
+    @Column(unique = true, nullable = false)
+    @Setter
+    @Getter
+    private Long id;
 
     @Column(nullable = false, length = 5000)
     @Getter
     @Setter
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private User owner;
 }

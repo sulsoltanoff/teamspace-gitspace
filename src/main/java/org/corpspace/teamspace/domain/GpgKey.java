@@ -18,7 +18,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(indexes = { @Index(columnList = "keyId") })
+@Table(indexes = { @Index(columnList = "id") })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GpgKey extends BaseGpgKey {
 

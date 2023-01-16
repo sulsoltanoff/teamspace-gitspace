@@ -20,7 +20,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Table(indexes = { @Index(columnList = "name") })
+@Table(indexes = { @Index(columnList = "username") })
 public class User extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
@@ -47,19 +47,19 @@ public class User extends AbstractAuditingEntity {
     @Setter
     private String accessToken = RandomStringUtils.randomAlphanumeric(40);
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @Getter
     @Setter
     private List<SshKey> sshKeys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @Getter
     @Setter
     private List<EmailAddress> emailAddresses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @Getter
     @Setter

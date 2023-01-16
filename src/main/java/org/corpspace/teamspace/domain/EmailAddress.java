@@ -8,6 +8,7 @@
 
 package org.corpspace.teamspace.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,9 +17,18 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table(name = "email_address")
 public class EmailAddress extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue
+    @JsonIgnore
+    @Column(unique = true, nullable = false)
+    @Setter
+    @Getter
+    private Long id;
 
     @Column(nullable = false, unique = true)
     @Getter

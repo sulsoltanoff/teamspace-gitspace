@@ -64,7 +64,7 @@ public abstract class AbstractAuditingEntity<T> implements Serializable, Compara
     private Instant lastModifiedDate = Instant.now();
 
     public int compareTo(AbstractAuditingEntity entity) {
-        if (getId() != null) {
+        if (this.getId() != null) {
             if (entity.getId() != null) return getId().compareTo(entity.getId()); else return -1;
         } else if (entity.getId() != null) {
             return 1;
