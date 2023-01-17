@@ -10,8 +10,8 @@ package org.corpspace.teamspace.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.validation.constraints.*;
-import org.corpspace.teamspace.domain.Role;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A DTO for the {@link org.corpspace.teamspace.domain.Role} entity.
@@ -19,46 +19,27 @@ import org.corpspace.teamspace.domain.Role;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class RoleDTO implements Serializable {
 
+    @Getter
+    @Setter
     private Long id;
 
+    @Getter
+    @Setter
     private String name;
 
+    @Getter
+    @Setter
     private Boolean managePullRequests;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getManagePullRequests() {
-        return managePullRequests;
-    }
-
-    public void setManagePullRequests(Boolean managePullRequests) {
-        this.managePullRequests = managePullRequests;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof RoleDTO)) {
+        if (!(o instanceof RoleDTO roleDTO)) {
             return false;
         }
 
-        RoleDTO roleDTO = (RoleDTO) o;
         if (this.id == null) {
             return false;
         }
