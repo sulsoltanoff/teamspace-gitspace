@@ -1,15 +1,76 @@
-# GitSpace
+<div align="center">
 
-This application was generated using JHipster 7.9.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.3](https://www.jhipster.tech/documentation-archive/v7.9.3).
+  <h1>GitSpace</h1>
 
-This is a "microservice" application intended to be part of a microservice architecture, please refer to the [Doing microservices with JHipster][] page of the documentation for more information.
-This application is configured for Service Discovery and Configuration with the JHipster-Registry. On launch, it will refuse to start if it is not able to connect to the JHipster-Registry at [http://localhost:8761](http://localhost:8761). For more information, read our documentation on [Service Discovery and Configuration with the JHipster-Registry][].
+  <p>
+    This application is part of the teamspace platform built on a microservice architecture.
+  </p>
 
-## Project Structure
+<!-- Badges -->
+<p>
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/sulsoltanoff/teamspace-gitspace" alt="contributors" />
+    </a>
+    <a href="">
+        <img src="https://img.shields.io/github/last-commit/sulsoltanoff/teamspace-gitspace" alt="last update" />
+    </a>
+    <a href="https://github.com/sulsoltanoff/awesome-readme-template/issues/">
+        <img src="https://img.shields.io/github/issues/sulsoltanoff/teamspace-gitspace" alt="open issues" />
+    </a>
+    <a href="">
+        <img src="https://img.shields.io/github/actions/workflow/status/sulsoltanoff/teamspace-gitspace/codeql.yml" />
+    </a>
+    <a>
+        <img src="https://img.shields.io/github/v/tag/sulsoltanoff/teamspace-gitspace?include_prereleases&sort=semver" />
+    </a>
+    <a>
+        <img src="https://img.shields.io/github/languages/code-size/sulsoltanoff/teamspace-gitspace" />
+    </a>
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/sulsoltanoff/teamspace-gitspace.svg" alt="license" />
+    </a>
+</p>
+
+<h4>
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/sulsoltanoff/ateamspace-gitspace/issues/">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/issues/">Request Feature</a>
+  </h4>
+</div>
+
+<br />
+GitSpace provides tools for automating the software development process, such as an integrated development environment, version control support, tools for building and testing automation. 
+It empowers developers and teams to work more efficiently, increasing productivity and giving them the tools to accelerate development.
+
+<!-- Table of Contents -->
+
+# :memo: Table of Contents
+
+- [About the Project](#-star2--about-the-project)
+  - [Project structure](#project-structure)
+  - [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#gear-installation)
+  - [Running Tests](#running-tests)
+  - [Run Locally](#running-run-locally)
+  - [Deployment](#triangular_flag_on_post-deployment)
+- [Usage](#eyes-usage)
+- [Roadmap](#compass-roadmap)
+- [Contributing](#wave-contributing)
+  - [Code of Conduct](#scroll-code-of-conduct)
+- [FAQ](#grey_question-faq)
+- [License](#warning-license)
+- [Contact](#handshake-contact)
+- [Acknowledgements](#gem-acknowledgements)
+
+## :star2: About the Project
+
+### Project Structure
 
 Node is required for generation and recommended for development. `package.json` is always generated for a better development experience with prettier, commit hooks, scripts and so on.
-
-In the project root, JHipster generates configuration files for tools like git, prettier, eslint, husky, and others that are well known and you can find references in the web.
 
 `/src/*` structure follows default Java structure.
 
@@ -17,25 +78,77 @@ In the project root, JHipster generates configuration files for tools like git, 
   JHipster configuration is stored in this file at `generator-jhipster` key. You may find `generator-jhipster-*` for specific blueprints configuration.
 - `.yo-resolve` (optional) - Yeoman conflict resolver
   Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if ommited) or force. Lines starting with `#` are considered comments and are ignored.
-- `.jhipster/*.json` - JHipster entity configuration files
 - `/src/main/docker` - Docker configurations for the application and services that the application depends on
 
-## Development
+### Tech Stack
+
+<details>
+  <summary>Technologies and utils using in app</summary>
+  <ul>
+    <li><a href="https://bell-sw.com/libericajdk/">JDK 17 Liberica</a></li>
+    <li><a href="https://spring.io">Spring</a></li>
+    <li><a href="https://www.postgresql.org/">Postgresql</a></li>
+    <li><a href="https://maven.apache.org/">Maven</a></li>
+    <li><a href="https://www.docker.com/">Docker</a></li>
+    <li><a href="https://nodejs.org">NodeJS for dev</a></li>
+    <li><a href="https://kafka.apache.org/">Apache kafka</a></li>    
+    <li><a href="https://grafana.com/">Grafana</a></li>
+    <li><a href="https://prometheus.io/">Prometheus</a></li>
+    <li><a href="https://www.elastic.co/">Elasticsearch</a></li>
+    <li><a href="https://www.sonarsource.com/products/sonarqube/">Sonar Qube</a></li>
+    <li><a href="https://hibernate.org/">Hibernate</a></li>
+  </ul>
+</details>
+
+## Getting Started
+
+### Prerequisites
+
+This project uses Liberica JDK and NodeJs (Only development) platform.
+
+- Install Liberica JDK 17 [Docs for install](https://bell-sw.com/pages/liberica_install_guide-17.0.5/)
+- Install NodeJS v16.x. We recommend use [nvm](https://github.com/nvm-sh/nvm) package manager
+- Docker and docker-compose
+- Git
+- Eclipse or IntelliJ IDEA
+
+### Installation
+
+Follow the commands for installation:
+
+```bash
+./mvnw clean validate compile
+```
+
+```bash
+npm i
+```
+
+Optional step for settings idea
+
+```bash
+./mvnw idea:idea ### For IntelliJ IDEA
+
+./mvnw eclipse:eclipse ### For Eclipse
+```
 
 To start your application in the dev profile, run:
 
-```
+```bash
 ./mvnw
+
+## Or use npm
+npm run app:start
 ```
 
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+### Running Tests
 
-### JHipster Control Center
+For run Unit test
 
-JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
-
-```
-docker-compose -f src/main/docker/jhipster-control-center.yml up
+```bash
+npm run backend:unit:test
+npm run ci:backend:test
+./mvnw verify
 ```
 
 ### Doing API-First development using openapi-generator-cli
@@ -67,8 +180,6 @@ To ensure everything worked, run:
 ```
 java -jar target/*.jar
 ```
-
-Refer to [Using JHipster in production][] for more details.
 
 ### Packaging as war
 
