@@ -12,33 +12,38 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.corpspace.teamspace.config.Constants;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Table(indexes = { @Index(columnList = "username") })
+@Table(name = "user", indexes = { @Index(columnList = "username") })
 public class User extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
     @Column(unique = true, nullable = false)
+    @NotNull
+    @Pattern(regexp = Constants.USERNAME_REGEX)
     @Getter
     @Setter
     private String username;
 
     @JsonIgnore
-    @Column(length = 1024, nullable = false)
+    @Column(length = 1024, nullable = false, name = "password_hash")
     @Getter
     @Setter
     private String password;
 
     @Getter
     @Setter
-    private String FullName;
+    private String fullName;
 
     @JsonIgnore
     @Lob
