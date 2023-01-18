@@ -9,6 +9,8 @@
 package org.corpspace.teamspace.service.dto;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -32,7 +34,7 @@ public class UserDTO implements Serializable {
     @Size(min = 5, max = 255)
     @Getter
     @Setter
-    private String email;
+    private Collection<String> emails;
 
     @Getter
     @Setter
@@ -44,11 +46,11 @@ public class UserDTO implements Serializable {
 
     @Getter
     @Setter
-    private String sshKey;
+    private List<String> sshKey;
 
     @Getter
     @Setter
-    private String gpgKey;
+    private List<String> gpgKey;
 
     @Override
     public boolean equals(Object o) {
@@ -76,7 +78,7 @@ public class UserDTO implements Serializable {
         return "UserDTO{" +
             "id=" + getId() +
             ", name='" + getFullName() + "'" +
-            ", email ='" + getEmail() + "'" +
+            ", email ='" + getEmails() + "'" +
             "}";
     }
 }
