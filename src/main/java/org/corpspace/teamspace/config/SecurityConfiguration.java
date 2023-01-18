@@ -46,6 +46,10 @@ public class SecurityConfiguration {
         // @formatter:off
         http
             .csrf()
+            .disable()
+            .exceptionHandling()
+                .authenticationEntryPoint(problemSupport)
+                .accessDeniedHandler(problemSupport)
         .and()
             .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
