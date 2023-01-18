@@ -30,11 +30,10 @@ public class UserDTO implements Serializable {
     @Setter
     private String username;
 
-    @Email
     @Size(min = 5, max = 255)
     @Getter
     @Setter
-    private Collection<String> emails;
+    private List<String> emails;
 
     @Getter
     @Setter

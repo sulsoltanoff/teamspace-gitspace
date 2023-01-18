@@ -11,18 +11,20 @@ package org.corpspace.teamspace.repository;
 import java.util.List;
 import org.corpspace.teamspace.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Spring Data JPA repository for the User entity.
  */
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
-
-    User findByEmail(String email);
-
-    User findByUsernameOrEmail(String username, String email);
-
-    User findByFullName(String fullName);
-
-    User findByAccessToken(String accessToken);
+    //    User findByUsername(String username);
+    //
+    //    User findByEmail(String email);
+    //
+    //    User findByUsernameOrEmail(String username, String email);
+    //
+    //    User findByFullName(String fullName);
+    //
+    //    User findByAccessToken(String accessToken);
 }

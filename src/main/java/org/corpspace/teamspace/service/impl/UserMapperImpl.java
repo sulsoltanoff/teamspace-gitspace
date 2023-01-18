@@ -8,15 +8,17 @@
 
 package org.corpspace.teamspace.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.corpspace.teamspace.domain.EmailAddress;
 import org.corpspace.teamspace.domain.GpgKey;
 import org.corpspace.teamspace.domain.SshKey;
 import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.service.dto.UserDTO;
 import org.corpspace.teamspace.service.mapper.UserMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserMapperImpl implements UserMapper {
 
     @Override
@@ -24,17 +26,25 @@ public class UserMapperImpl implements UserMapper {
         User user = new User();
         user.setId(dto.getId());
         user.setUsername(dto.getUsername());
-        user.setEmails(toEmailAddresses(dto.getEmails()));
+        user.setEmails(convertToEntity(dto.getEmails()));
         user.setFullName(dto.getFullName());
-        user.setGpgKeys(toGpgKeys(dto.getGpgKey()));
-        user.setSshKeys(toSshKeys(dto.getSshKey()));
+        user.setGpgKeys(convertToEntity(dto.getGpgKey()));
+        user.setSshKeys(convertToEntity(dto.getSshKey()));
         user.setAccessToken(dto.getAccessToken());
         return user;
     }
 
     @Override
     public UserDTO toDto(User entity) {
-        return null;
+        UserDTO dto = new UserDTO();
+        dto.setId(entity.getId());
+        dto.setUsername(entity.getUsername());
+        //        dto.setEmails(toEmailAddressesDTO(entity.getEmails()));
+        dto.setFullName(entity.getFullName());
+        //        dto.setGpgKey(toGpgKeysDTO(entity.getGpgKeys()));
+        //        dto.setSshKey(toSshKeysDTO(entity.getSshKeys()));
+        dto.setAccessToken(entity.getAccessToken());
+        return dto;
     }
 
     @Override
@@ -50,25 +60,13 @@ public class UserMapperImpl implements UserMapper {
     @Override
     public void partialUpdate(User entity, UserDTO dto) {}
 
-    private Collection<EmailAddress> toEmailAddresses(Collection<String> emails) {
-        Collection<EmailAddress> emailAddresses = null;
-        if (emails != null) {
-            for (Object email : emails) {
-                if (emailAddresses == null) {
-                    emailAddresses = (Collection<EmailAddress>) email;
-                } else {
-                    emailAddresses.add((EmailAddress) email);
-                }
+    private <T, K> List<K> convertToEntity(List<T> dtoCollection) {
+        List<K> entityList = new ArrayList<>();
+        if (dtoCollection != null) {
+            for (T dto : dtoCollection) {
+                entityList.add((K) dto);
             }
         }
-        return emailAddresses;
-    }
-
-    private List<SshKey> toSshKeys(List<String> sshKeys) {
-        return null;
-    }
-
-    private List<GpgKey> toGpgKeys(List<String> gpgKeys) {
-        return null;
+        return entityList;
     }
 }

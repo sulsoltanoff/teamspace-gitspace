@@ -26,7 +26,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "user", indexes = { @Index(columnList = "username") })
-public class User extends AbstractAuditingEntity {
+public class User extends AbstractAuditingEntity<User> {
 
     private static final long serialVersionUID = 1L;
 
@@ -65,7 +65,7 @@ public class User extends AbstractAuditingEntity {
     @Getter
     @Setter
     @Email
-    private Collection<EmailAddress> emails = new ArrayList<>();
+    private List<EmailAddress> emails = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
