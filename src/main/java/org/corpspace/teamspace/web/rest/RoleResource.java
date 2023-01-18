@@ -65,7 +65,7 @@ public class RoleResource {
         }
         RoleDTO result = roleService.save(roleDTO);
         return ResponseEntity
-            .created(new URI("/api/roles/" + result.getId()))
+            .created(new URI("/api/v1/roles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
