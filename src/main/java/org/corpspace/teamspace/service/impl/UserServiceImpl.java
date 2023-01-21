@@ -8,14 +8,17 @@
 
 package org.corpspace.teamspace.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.repository.UserRepository;
 import org.corpspace.teamspace.service.UserService;
 import org.corpspace.teamspace.service.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,17 +32,31 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapperImpl userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapperImpl userMapper) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapperImpl userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDTO save(UserDTO userDto) {
+    public User createUser(UserDTO userDto) {
         log.debug("Request to save User : {}", userDto);
-        User user = userMapper.toEntity(userDto);
-        user = userRepository.save(user);
-        return userMapper.toDto(user);
+
+        User user = new User();
+        user.setId(UUID.randomUUID());
+        user.setUsername(userDto.getUsername().toLowerCase());
+        user.setFullName(userDto.getFullName());
+        String passwordEncrypted = passwordEncoder.encode(userDto.getPassword());
+        user.setPassword(passwordEncrypted);
+        user.setEmails(convertToEntity(userDto.getEmails()));
+        user.setAccessToken(userDto.getAccessToken());
+        user.setSshKeys(convertToEntity(userDto.getSshKey()));
+        user.setGpgKeys(convertToEntity(userDto.getGpgKey()));
+        userRepository.save(user);
+
+        return user;
     }
 
     @Override
@@ -53,15 +70,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id) {}
+    public void delete(UUID id) {}
 
     @Override
-    public UserDTO findOne(Long id) {
+    public UserDTO findOne(UUID id) {
         return null;
     }
 
     @Override
     public List<UserDTO> findAll() {
         return null;
+    }
+
+    private <T, K> List<K> convertToEntity(List<T> dtoCollection) {
+        List<K> entityList = new ArrayList<>();
+        if (dtoCollection != null) {
+            for (T dto : dtoCollection) {
+                entityList.add((K) dto);
+            }
+        }
+        return entityList;
     }
 }

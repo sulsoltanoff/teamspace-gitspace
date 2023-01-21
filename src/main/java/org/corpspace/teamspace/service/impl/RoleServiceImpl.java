@@ -11,6 +11,7 @@ package org.corpspace.teamspace.service.impl;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.corpspace.teamspace.domain.Role;
 import org.corpspace.teamspace.repository.RoleRepository;
@@ -79,13 +80,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<RoleDTO> findOne(Long id) {
+    public Optional<RoleDTO> findOne(UUID id) {
         log.debug("Request to get Role : {}", id);
         return roleRepository.findById(id).map(roleMapper::toDto);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         log.debug("Request to delete Role : {}", id);
         roleRepository.deleteById(id);
     }

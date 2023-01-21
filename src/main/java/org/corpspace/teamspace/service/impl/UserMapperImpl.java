@@ -9,10 +9,7 @@
 package org.corpspace.teamspace.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import org.corpspace.teamspace.domain.GpgKey;
-import org.corpspace.teamspace.domain.SshKey;
 import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.service.dto.UserDTO;
 import org.corpspace.teamspace.service.mapper.UserMapper;
@@ -24,7 +21,6 @@ public class UserMapperImpl implements UserMapper {
     @Override
     public User toEntity(UserDTO dto) {
         User user = new User();
-        user.setId(dto.getId());
         user.setUsername(dto.getUsername());
         user.setEmails(convertToEntity(dto.getEmails()));
         user.setFullName(dto.getFullName());
@@ -39,22 +35,30 @@ public class UserMapperImpl implements UserMapper {
         UserDTO dto = new UserDTO();
         dto.setId(entity.getId());
         dto.setUsername(entity.getUsername());
-        //        dto.setEmails(toEmailAddressesDTO(entity.getEmails()));
+        dto.setEmails(convertToDto(entity.getEmails()));
         dto.setFullName(entity.getFullName());
-        //        dto.setGpgKey(toGpgKeysDTO(entity.getGpgKeys()));
-        //        dto.setSshKey(toSshKeysDTO(entity.getSshKeys()));
+        dto.setGpgKey(convertToDto(entity.getGpgKeys()));
+        dto.setSshKey(convertToDto(entity.getSshKeys()));
         dto.setAccessToken(entity.getAccessToken());
         return dto;
     }
 
     @Override
     public List<User> toEntity(List<UserDTO> dtoList) {
-        return null;
+        List<User> user = new ArrayList<>();
+        for (UserDTO dto : dtoList) {
+            user = (List<User>) toEntity(dto);
+        }
+        return user;
     }
 
     @Override
     public List<UserDTO> toDto(List<User> entityList) {
-        return null;
+        List<UserDTO> dtoList = new ArrayList<>();
+        for (User userEntity : entityList) {
+            dtoList = (List<UserDTO>) toDto(userEntity);
+        }
+        return dtoList;
     }
 
     @Override
@@ -68,5 +72,15 @@ public class UserMapperImpl implements UserMapper {
             }
         }
         return entityList;
+    }
+
+    private <T, K> List<K> convertToDto(List<T> entityCollection) {
+        List<K> dtoList = new ArrayList<>();
+        if (entityCollection != null) {
+            for (T entity : entityCollection) {
+                dtoList.add((K) entity);
+            }
+        }
+        return dtoList;
     }
 }

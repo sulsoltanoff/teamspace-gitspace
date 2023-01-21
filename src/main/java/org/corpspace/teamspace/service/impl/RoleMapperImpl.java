@@ -8,6 +8,7 @@
 
 package org.corpspace.teamspace.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.corpspace.teamspace.domain.Role;
@@ -21,7 +22,7 @@ public class RoleMapperImpl implements RoleMapper {
     @Override
     public Role toEntity(RoleDTO dto) {
         Role role = new Role();
-        role.setId(UUID.randomUUID().getMostSignificantBits());
+        role.setId(UUID.randomUUID());
         role.setName(dto.getName());
         role.setManagePullRequests(dto.getManagePullRequests());
         return role;
@@ -29,17 +30,29 @@ public class RoleMapperImpl implements RoleMapper {
 
     @Override
     public RoleDTO toDto(Role entity) {
-        return null;
+        RoleDTO dto = new RoleDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setManagePullRequests(entity.getManagePullRequests());
+        return dto;
     }
 
     @Override
     public List<Role> toEntity(List<RoleDTO> dtoList) {
-        return null;
+        List<Role> roleList = new ArrayList<>();
+        for (RoleDTO roleDto : dtoList) {
+            roleList = (List<Role>) toEntity(roleDto);
+        }
+        return roleList;
     }
 
     @Override
     public List<RoleDTO> toDto(List<Role> entityList) {
-        return null;
+        List<RoleDTO> dtoList = new ArrayList<>();
+        for (Role roleEntity : entityList) {
+            dtoList = (List<RoleDTO>) toDto(roleEntity);
+        }
+        return dtoList;
     }
 
     @Override
