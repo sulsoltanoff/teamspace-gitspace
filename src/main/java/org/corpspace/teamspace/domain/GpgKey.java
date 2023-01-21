@@ -9,7 +9,9 @@
 package org.corpspace.teamspace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,19 +20,18 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(indexes = { @Index(columnList = "id") })
+@Table(indexes = { @Index(columnList = "id") }, schema = "public")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GpgKey extends BaseGpgKey {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
-    @JsonIgnore
     @Column(unique = true, nullable = false)
     @Setter
     @Getter
-    private Long id;
+    private UUID id;
 
     @JsonIgnore
     @Column(nullable = false)

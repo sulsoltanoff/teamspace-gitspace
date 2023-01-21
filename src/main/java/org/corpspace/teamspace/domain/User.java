@@ -9,9 +9,10 @@
 package org.corpspace.teamspace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -24,21 +25,28 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
+@Table(name = "user", indexes = { @Index(columnList = "username") }, schema = "public")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Table(name = "user", indexes = { @Index(columnList = "username") })
 public class User extends AbstractAuditingEntity<User> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
+    @Id
     @Column(unique = true, nullable = false)
+    @Getter
+    @Setter
+    private UUID id;
+
     @NotNull
+    @Column(unique = true, nullable = false)
     @Pattern(regexp = Constants.USERNAME_REGEX)
     @Getter
     @Setter
     private String username;
 
     @JsonIgnore
-    @Column(length = 1024, nullable = false, name = "password_hash")
+    @Column(length = 120, nullable = false, name = "password_hash")
     @Getter
     @Setter
     private String password;
@@ -64,7 +72,6 @@ public class User extends AbstractAuditingEntity<User> {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @Getter
     @Setter
-    @Email
     private List<EmailAddress> emails = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)

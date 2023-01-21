@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.corpspace.teamspace.IntegrationTest;
@@ -115,7 +116,7 @@ class RoleResourceIT {
     @Transactional
     void createRoleWithExistingId() throws Exception {
         // Create the Role with an existing ID
-        role.setId(1L);
+        role.setId(UUID.randomUUID());
         RoleDTO roleDTO = roleMapper.toDto(role);
 
         int databaseSizeBeforeCreate = roleRepository.findAll().size();
@@ -141,7 +142,7 @@ class RoleResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].managePullRequests").value(hasItem(DEFAULT_MANAGE_PULL_REQUESTS.booleanValue())));
     }
@@ -157,7 +158,7 @@ class RoleResourceIT {
             .perform(get(ENTITY_API_URL_ID, role.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(role.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(role.getId().toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.managePullRequests").value(DEFAULT_MANAGE_PULL_REQUESTS.booleanValue()));
     }
@@ -204,7 +205,7 @@ class RoleResourceIT {
     @Transactional
     void putNonExistingRole() throws Exception {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
-        role.setId(count.incrementAndGet());
+        role.setId(UUID.randomUUID());
 
         // Create the Role
         RoleDTO roleDTO = roleMapper.toDto(role);
@@ -227,7 +228,7 @@ class RoleResourceIT {
     @Transactional
     void putWithIdMismatchRole() throws Exception {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
-        role.setId(count.incrementAndGet());
+        role.setId(UUID.randomUUID());
 
         // Create the Role
         RoleDTO roleDTO = roleMapper.toDto(role);
@@ -250,7 +251,7 @@ class RoleResourceIT {
     @Transactional
     void putWithMissingIdPathParamRole() throws Exception {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
-        role.setId(count.incrementAndGet());
+        role.setId(UUID.randomUUID());
 
         // Create the Role
         RoleDTO roleDTO = roleMapper.toDto(role);
@@ -329,7 +330,7 @@ class RoleResourceIT {
     @Transactional
     void patchNonExistingRole() throws Exception {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
-        role.setId(count.incrementAndGet());
+        role.setId(UUID.randomUUID());
 
         // Create the Role
         RoleDTO roleDTO = roleMapper.toDto(role);
@@ -352,7 +353,7 @@ class RoleResourceIT {
     @Transactional
     void patchWithIdMismatchRole() throws Exception {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
-        role.setId(count.incrementAndGet());
+        role.setId(UUID.randomUUID());
 
         // Create the Role
         RoleDTO roleDTO = roleMapper.toDto(role);
@@ -375,7 +376,7 @@ class RoleResourceIT {
     @Transactional
     void patchWithMissingIdPathParamRole() throws Exception {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
-        role.setId(count.incrementAndGet());
+        role.setId(UUID.randomUUID());
 
         // Create the Role
         RoleDTO roleDTO = roleMapper.toDto(role);
@@ -419,7 +420,7 @@ class RoleResourceIT {
             .perform(get(ENTITY_SEARCH_API_URL + "?query=id:" + role.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].managePullRequests").value(hasItem(DEFAULT_MANAGE_PULL_REQUESTS.booleanValue())));
     }

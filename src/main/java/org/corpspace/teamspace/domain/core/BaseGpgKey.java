@@ -8,6 +8,7 @@
 
 package org.corpspace.teamspace.domain.core;
 
+import java.io.Serial;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +21,9 @@ import org.corpspace.teamspace.domain.AbstractAuditingEntity;
 import org.corpspace.teamspace.util.GpgUtils;
 
 @MappedSuperclass
-public class BaseGpgKey extends AbstractAuditingEntity {
+public class BaseGpgKey extends AbstractAuditingEntity<BaseGpgKey> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

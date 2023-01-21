@@ -9,6 +9,8 @@
 package org.corpspace.teamspace.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,19 +18,18 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
+@Table(name = "ssh_key", schema = "public")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Table(name = "ssh_key")
-public class SshKey extends AbstractAuditingEntity {
+public class SshKey extends AbstractAuditingEntity<SshKey> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
-    @JsonIgnore
     @Column(unique = true, nullable = false)
     @Setter
     @Getter
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false, length = 5000)
     @Getter

@@ -10,6 +10,7 @@ package org.corpspace.teamspace.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.UUID;
 import org.corpspace.teamspace.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 
@@ -19,11 +20,11 @@ class RoleTest {
     void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Role.class);
         Role role1 = new Role();
-        role1.setId(1L);
+        role1.setId(UUID.randomUUID());
         Role role2 = new Role();
         role2.setId(role1.getId());
         assertThat(role1).isEqualTo(role2);
-        role2.setId(2L);
+        role2.setId(UUID.randomUUID());
         assertThat(role1).isNotEqualTo(role2);
         role1.setId(null);
         assertThat(role1).isNotEqualTo(role2);

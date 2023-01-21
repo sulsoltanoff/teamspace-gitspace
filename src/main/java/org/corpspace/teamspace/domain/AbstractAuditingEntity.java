@@ -8,13 +8,14 @@
 
 package org.corpspace.teamspace.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -27,17 +28,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate" }, allowGetters = true)
 public abstract class AbstractAuditingEntity<T> implements Serializable, Comparable<AbstractAuditingEntity> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(generator = "entity_id")
-    @GenericGenerator(name = "entity_id", strategy = "org.corpspace.teamspace.domain.core.EntityIdGenerator")
-    @Getter
-    @Setter
-    private Long id;
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
@@ -64,12 +58,6 @@ public abstract class AbstractAuditingEntity<T> implements Serializable, Compara
     private Instant lastModifiedDate = Instant.now();
 
     public int compareTo(AbstractAuditingEntity entity) {
-        if (this.getId() != null) {
-            if (entity.getId() != null) return getId().compareTo(entity.getId()); else return -1;
-        } else if (entity.getId() != null) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return 0;
     }
 }

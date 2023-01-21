@@ -8,10 +8,14 @@
 
 package org.corpspace.teamspace.domain;
 
-import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.corpspace.teamspace.service.dto.RoleDTO;
+import java.io.Serial;
+import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,40 +23,33 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A Role.
  */
 @Entity
-@Table(name = "role")
+@Table(name = "role", schema = "public")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Role implements Serializable {
+public class Role extends AbstractAuditingEntity<Role> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
-    private Long id;
+    @Column(unique = true, nullable = false)
+    @Getter
+    @Setter
+    private UUID id;
 
     @Column(name = "name", unique = true)
+    @Getter
+    @Setter
     private String name;
 
     @Column(name = "manage_pull_requests")
+    @Getter
+    @Setter
     private Boolean managePullRequests;
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public Role id(Long id) {
+    public Role id(UUID id) {
         this.setId(id);
         return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public Role name(String name) {
@@ -60,24 +57,10 @@ public class Role implements Serializable {
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getManagePullRequests() {
-        return this.managePullRequests;
-    }
-
     public Role managePullRequests(Boolean managePullRequests) {
         this.setManagePullRequests(managePullRequests);
         return this;
     }
-
-    public void setManagePullRequests(Boolean managePullRequests) {
-        this.managePullRequests = managePullRequests;
-    }
-
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -92,17 +75,11 @@ public class Role implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "Role{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", managePullRequests='" + getManagePullRequests() + "'" +
-            "}";
+        return "Role{" + "id=" + getId() + ", name='" + getName() + "'" + ", managePullRequests='" + getManagePullRequests() + "'" + "}";
     }
 }
