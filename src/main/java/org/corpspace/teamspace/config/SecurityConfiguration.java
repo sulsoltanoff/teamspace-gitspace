@@ -8,15 +8,17 @@
 
 package org.corpspace.teamspace.config;
 
-import org.corpspace.teamspace.security.*;
-import org.corpspace.teamspace.security.jwt.*;
+import org.corpspace.teamspace.security.AuthoritiesConstants;
+import org.corpspace.teamspace.security.jwt.JWTConfigurer;
+import org.corpspace.teamspace.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 import tech.jhipster.config.JHipsterProperties;
@@ -30,6 +32,11 @@ public class SecurityConfiguration {
 
     private final TokenProvider tokenProvider;
     private final SecurityProblemSupport problemSupport;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     public SecurityConfiguration(
         TokenProvider tokenProvider,
