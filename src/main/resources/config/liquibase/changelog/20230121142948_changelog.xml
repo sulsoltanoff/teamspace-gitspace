@@ -1,0 +1,134 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (C) 2023 The Corpspace technologies.
+  ~
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this file,
+  ~ You can obtain one at https://mozilla.org/MPL/2.0/.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="sultan (generated)" id="1674311393600-1">
+        <createTable tableName="email_address">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="email_addressPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="value" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-2">
+        <createTable tableName="gpg_key">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="gpg_keyPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="content" type="BYTEA">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-3">
+        <createTable tableName="role">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rolePK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="manage_pull_requests" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-4">
+        <createTable tableName="ssh_key">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ssh_keyPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="content" type="VARCHAR(5000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-5">
+        <createTable tableName="user">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="userPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="access_token" type="OID"/>
+            <column name="full_name" type="VARCHAR(255)"/>
+            <column name="password_hash" type="VARCHAR(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-6">
+        <addUniqueConstraint columnNames="id" constraintName="UC_EMAIL_ADDRESSID_COL" tableName="email_address"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-7">
+        <addUniqueConstraint columnNames="value" constraintName="UC_EMAIL_ADDRESSVALUE_COL" tableName="email_address"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-8">
+        <addUniqueConstraint columnNames="id" constraintName="UC_GPG_KEYID_COL" tableName="gpg_key"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-9">
+        <addUniqueConstraint columnNames="name" constraintName="UC_ROLENAME_COL" tableName="role"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-10">
+        <addUniqueConstraint columnNames="id" constraintName="UC_SSH_KEYID_COL" tableName="ssh_key"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-11">
+        <addUniqueConstraint columnNames="username" constraintName="UC_USERUSERNAME_COL" tableName="user"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-12">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="email_address" constraintName="FKhusshbo0ey66et4b79l9ie5ew" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-13">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="ssh_key" constraintName="FKm4eo0r2ur8dst8u9gutlxlwsq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+    </changeSet>
+    <changeSet author="sultan (generated)" id="1674311393600-14">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="gpg_key" constraintName="FKqaok31or6w5jpdp9qte7x923y" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
