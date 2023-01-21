@@ -10,6 +10,7 @@ package org.corpspace.teamspace.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.corpspace.teamspace.service.dto.RoleDTO;
 
 /**
@@ -53,12 +54,12 @@ public interface RoleService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<RoleDTO> findOne(Long id);
+    Optional<RoleDTO> findOne(UUID id);
 
     /**
      * Delete the "id" role.
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
+    void delete(UUID id);
 }

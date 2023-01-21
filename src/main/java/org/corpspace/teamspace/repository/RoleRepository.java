@@ -8,6 +8,7 @@
 
 package org.corpspace.teamspace.repository;
 
+import java.util.UUID;
 import org.corpspace.teamspace.domain.Role;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {}
+public interface RoleRepository extends JpaRepository<Role, UUID> {}

@@ -10,6 +10,8 @@ package org.corpspace.teamspace.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.service.dto.UserDTO;
 
 /**
@@ -21,7 +23,7 @@ public interface UserService {
      * @param user the entity to save.
      * @return the persisted entity.
      */
-    UserDTO save(UserDTO user);
+    User createUser(UserDTO user);
 
     /**
      * Update the users.
@@ -41,14 +43,14 @@ public interface UserService {
      * Delete the user.
      * @param id the id of the entity.
      */
-    void delete(Long id);
+    void delete(UUID id);
 
     /**
      * Find all users.
      * @param id the id of the entity.
      * @return the find one entity.
      */
-    UserDTO findOne(Long id);
+    UserDTO findOne(UUID id);
 
     /**
      * Find all users.

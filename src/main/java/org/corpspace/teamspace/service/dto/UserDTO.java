@@ -9,10 +9,9 @@
 package org.corpspace.teamspace.service.dto;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.constraints.Email;
+import java.util.UUID;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Getter;
@@ -23,12 +22,16 @@ public class UserDTO implements Serializable {
 
     @Getter
     @Setter
-    private Long id;
+    private UUID id;
 
     @Pattern(regexp = Constants.USERNAME_REGEX)
     @Getter
     @Setter
     private String username;
+
+    @Getter
+    @Setter
+    private String password;
 
     @Size(min = 5, max = 255)
     @Getter

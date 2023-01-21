@@ -10,6 +10,7 @@ package org.corpspace.teamspace.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ public class RoleDTO implements Serializable {
 
     @Getter
     @Setter
-    private Long id;
+    private UUID id;
 
     @Getter
     @Setter
