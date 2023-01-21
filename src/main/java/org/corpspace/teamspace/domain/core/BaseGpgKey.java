@@ -52,6 +52,6 @@ public class BaseGpgKey extends AbstractAuditingEntity<BaseGpgKey> {
     }
 
     public List<Long> getKeyIdList() {
-        return getPgpPublicKeyList().stream().map(PGPPublicKey::getKeyID).collect(Collectors.toList());
+        return getPgpPublicKeyList().stream().map(PGPPublicKey::getKeyID).toList();
     }
 }

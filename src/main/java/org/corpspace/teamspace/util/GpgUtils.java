@@ -23,6 +23,10 @@ import org.bouncycastle.openpgp.jcajce.JcaPGPPublicKeyRingCollection;
 
 public class GpgUtils {
 
+    private GpgUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static List<PGPPublicKey> parsePublicKey(String key) {
         try (InputStream in = PGPUtil.getDecoderStream(new ByteArrayInputStream(key.getBytes(StandardCharsets.UTF_8)))) {
             List<PGPPublicKey> keys = new ArrayList<>();
@@ -38,6 +42,7 @@ public class GpgUtils {
             if (keys.isEmpty()) throw new IllegalArgumentException("No public keys found");
             return keys;
         } catch (IOException | PGPException e) {
+            // TODO: Define and throw a dedicated exception instead of using a generic one.
             throw new RuntimeException(e);
         }
     }

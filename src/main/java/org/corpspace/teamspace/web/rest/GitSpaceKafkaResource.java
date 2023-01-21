@@ -48,6 +48,7 @@ public class GitSpaceKafkaResource {
     @PostMapping("/publish")
     public void publish(@RequestParam String message) {
         log.debug("REST request the message : {} to send to Kafka topic ", message);
+
         Map<String, Object> map = new HashMap<>();
         map.put(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.TEXT_PLAIN_VALUE);
         MessageHeaders headers = new MessageHeaders(map);
@@ -57,8 +58,9 @@ public class GitSpaceKafkaResource {
     @GetMapping("/register")
     public ResponseBodyEmitter register(Principal principal) {
         log.debug("Registering sse client for {}", principal.getName());
+
         SseEmitter emitter = new SseEmitter();
-        emitter.onCompletion(() -> emitters.remove(emitter));
+        emitter.onCompletion(() -> emitters.remove(principal.getName()));
         emitters.put(principal.getName(), emitter);
         return emitter;
     }
@@ -73,6 +75,7 @@ public class GitSpaceKafkaResource {
     @StreamListener(value = KafkaSseConsumer.CHANNELNAME, copyHeaders = "false")
     public void consume(Message<String> message) {
         log.debug("Got message from kafka stream: {}", message.getPayload());
+
         emitters
             .entrySet()
             .stream()

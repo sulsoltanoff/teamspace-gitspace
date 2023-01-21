@@ -28,7 +28,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractAuditingEntity<T> implements Serializable, Comparable<AbstractAuditingEntity> {
+public abstract class AbstractAuditingEntity<T> implements Serializable, Comparable<T> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -57,7 +57,7 @@ public abstract class AbstractAuditingEntity<T> implements Serializable, Compara
     @Setter
     private Instant lastModifiedDate = Instant.now();
 
-    public int compareTo(AbstractAuditingEntity entity) {
+    public int compareTo(T entity) {
         return 0;
     }
 }

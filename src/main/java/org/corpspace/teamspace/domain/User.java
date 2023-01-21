@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.Getter;
@@ -91,8 +90,7 @@ public class User extends AbstractAuditingEntity<User> {
     }
 
     @Override
-    public int compareTo(AbstractAuditingEntity entity) {
-        User user = (User) entity;
-        return getDisplayUsername().compareTo(user.getDisplayUsername());
+    public int compareTo(User entity) {
+        return getDisplayUsername().compareTo(entity.getDisplayUsername());
     }
 }

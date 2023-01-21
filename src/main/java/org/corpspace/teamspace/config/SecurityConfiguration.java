@@ -20,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 import tech.jhipster.config.JHipsterProperties;
 
@@ -27,8 +28,6 @@ import tech.jhipster.config.JHipsterProperties;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration {
-
-    private final JHipsterProperties jHipsterProperties;
 
     private final TokenProvider tokenProvider;
     private final SecurityProblemSupport problemSupport;
@@ -38,14 +37,9 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    public SecurityConfiguration(
-        TokenProvider tokenProvider,
-        JHipsterProperties jHipsterProperties,
-        SecurityProblemSupport problemSupport
-    ) {
+    public SecurityConfiguration(TokenProvider tokenProvider, SecurityProblemSupport problemSupport) {
         this.tokenProvider = tokenProvider;
         this.problemSupport = problemSupport;
-        this.jHipsterProperties = jHipsterProperties;
     }
 
     @Bean

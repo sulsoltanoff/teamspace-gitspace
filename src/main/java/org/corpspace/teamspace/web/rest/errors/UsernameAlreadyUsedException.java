@@ -8,10 +8,12 @@
 
 package org.corpspace.teamspace.web.rest.errors;
 
-import java.net.URI;
+import java.io.Serial;
 
 public class UsernameAlreadyUsedException extends BadRequestAlertException {
 
+    // TODO: This class has 7 parents which is greater than 5 authorized.
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public UsernameAlreadyUsedException() {

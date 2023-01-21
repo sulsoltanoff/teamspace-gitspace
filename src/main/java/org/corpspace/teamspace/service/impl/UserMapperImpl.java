@@ -62,7 +62,26 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public void partialUpdate(User entity, UserDTO dto) {}
+    public void partialUpdate(User entity, UserDTO dto) {
+        if (dto.getUsername() != null) {
+            entity.setUsername(dto.getUsername());
+        }
+        if (dto.getEmails() != null) {
+            entity.setEmails(convertToEntity(dto.getEmails()));
+        }
+        if (dto.getFullName() != null) {
+            entity.setFullName(dto.getFullName());
+        }
+        if (dto.getGpgKey() != null) {
+            entity.setGpgKeys(convertToEntity(dto.getGpgKey()));
+        }
+        if (dto.getSshKey() != null) {
+            entity.setSshKeys(convertToEntity(dto.getSshKey()));
+        }
+        if (dto.getAccessToken() != null) {
+            entity.setAccessToken(dto.getAccessToken());
+        }
+    }
 
     private <T, K> List<K> convertToEntity(List<T> dtoCollection) {
         List<K> entityList = new ArrayList<>();

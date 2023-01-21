@@ -56,5 +56,12 @@ public class RoleMapperImpl implements RoleMapper {
     }
 
     @Override
-    public void partialUpdate(Role entity, RoleDTO dto) {}
+    public void partialUpdate(Role entity, RoleDTO dto) {
+        if (dto.getName() != null) {
+            entity.setName(dto.getName());
+        }
+        if (dto.getManagePullRequests() != null) {
+            entity.setManagePullRequests(dto.getManagePullRequests());
+        }
+    }
 }

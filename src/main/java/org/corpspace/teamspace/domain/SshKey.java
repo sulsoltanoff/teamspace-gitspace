@@ -8,7 +8,6 @@
 
 package org.corpspace.teamspace.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serial;
 import java.util.UUID;
 import javax.persistence.*;
