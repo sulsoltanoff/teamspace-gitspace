@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.corpspace.teamspace.domain.Role;
 import org.corpspace.teamspace.repository.RoleRepository;
 import org.corpspace.teamspace.service.dto.RoleDTO;
 import org.corpspace.teamspace.service.impl.RoleServiceImpl;
@@ -59,12 +60,12 @@ public class RoleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/roles")
-    public ResponseEntity<RoleDTO> createRole(@Valid @RequestBody RoleDTO roleDTO) throws URISyntaxException {
+    public ResponseEntity<Role> createRole(@Valid @RequestBody RoleDTO roleDTO) throws URISyntaxException {
         log.debug("REST request to save Role : {}", roleDTO);
         if (roleDTO.getId() != null) {
             throw new BadRequestAlertException("A new role cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RoleDTO result = roleService.save(roleDTO);
+        Role result = roleService.createRole(roleDTO);
         return ResponseEntity
             .created(new URI("/api/v1/roles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -82,11 +83,12 @@ public class RoleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/roles/{id}")
-    public ResponseEntity<RoleDTO> updateRole(
+    public ResponseEntity<Role> updateRole(
         @PathVariable(value = "id", required = false) final UUID id,
         @Valid @RequestBody RoleDTO roleDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Role : {}, {}", id, roleDTO);
+
         if (roleDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -98,7 +100,8 @@ public class RoleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        RoleDTO result = roleService.update(roleDTO);
+        Role result = roleService.update(roleDTO);
+
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, roleDTO.getId().toString()))
@@ -117,11 +120,12 @@ public class RoleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/roles/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<RoleDTO> partialUpdateRole(
+    public ResponseEntity<Role> partialUpdateRole(
         @PathVariable(value = "id", required = false) final UUID id,
         @NotNull @RequestBody RoleDTO roleDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Role partially : {}, {}", id, roleDTO);
+
         if (roleDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -133,7 +137,7 @@ public class RoleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<RoleDTO> result = roleService.partialUpdate(roleDTO);
+        Optional<Role> result = roleService.partialUpdate(roleDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -147,8 +151,9 @@ public class RoleResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of roles in body.
      */
     @GetMapping("/roles")
-    public List<RoleDTO> getAllRoles() {
+    public List<Role> getAllRoles() {
         log.debug("REST request to get all Roles");
+
         return roleService.findAll();
     }
 
@@ -159,10 +164,12 @@ public class RoleResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the roleDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/roles/{id}")
-    public ResponseEntity<RoleDTO> getRole(@PathVariable UUID id) {
+    public ResponseEntity<Role> getRole(@PathVariable UUID id) {
         log.debug("REST request to get Role : {}", id);
-        Optional<RoleDTO> roleDTO = roleService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(roleDTO);
+
+        Optional<Role> roleEntity = roleService.findOne(id);
+
+        return ResponseUtil.wrapOrNotFound(roleEntity);
     }
 
     /**
@@ -174,7 +181,9 @@ public class RoleResource {
     @DeleteMapping("/roles/{id}")
     public ResponseEntity<Void> deleteRole(@PathVariable UUID id) {
         log.debug("REST request to delete Role : {}", id);
+
         roleService.delete(id);
+
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

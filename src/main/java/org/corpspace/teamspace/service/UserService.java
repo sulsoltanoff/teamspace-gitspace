@@ -30,14 +30,14 @@ public interface UserService {
      * @param user the entity to update.
      * @return the persisted entity.
      */
-    UserDTO update(UserDTO user);
+    User update(UserDTO user);
 
     /**
      * Partial update the users.
      * @param user the entity to update.
      * @return the persisted entity.
      */
-    Optional<UserDTO> partialUpdate(UserDTO user);
+    Optional<User> partialUpdate(UserDTO user);
 
     /**
      * Delete the user.
@@ -48,13 +48,14 @@ public interface UserService {
     /**
      * Find all users.
      * @param id the id of the entity.
-     * @return the find one entity.
+     * @return the entity.
      */
-    UserDTO findOne(UUID id);
+    Optional<User> findOne(UUID id);
 
     /**
      * Find all users.
+     *
      * @return the find all entity.
      */
-    List<UserDTO> findAll();
+    List<User> findAll();
 }

@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.corpspace.teamspace.domain.Role;
 import org.corpspace.teamspace.repository.RoleRepository;
 import org.corpspace.teamspace.service.RoleService;
@@ -41,23 +40,36 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDTO save(RoleDTO roleDTO) {
+    public Role createRole(RoleDTO roleDTO) {
         log.debug("Request to save Role : {}", roleDTO);
-        Role role = roleMapper.toEntity(roleDTO);
-        role = roleRepository.save(role);
-        return roleMapper.toDto(role);
+
+        Role role = new Role();
+        role.setId(UUID.randomUUID());
+        role.setName(roleDTO.getName());
+        role.setManagePullRequests(roleDTO.getManagePullRequests());
+        roleRepository.save(role);
+
+        return role;
     }
 
     @Override
-    public RoleDTO update(RoleDTO roleDTO) {
+    public Role update(RoleDTO roleDTO) {
         log.debug("Request to update Role : {}", roleDTO);
-        Role role = roleMapper.toEntity(roleDTO);
-        role = roleRepository.save(role);
-        return roleMapper.toDto(role);
+
+        Optional<Role> role = roleRepository.findById(roleDTO.getId());
+        if (role.isEmpty()) {
+            return null;
+        }
+        Role roleToUpdate = role.get();
+        roleToUpdate.setName(roleDTO.getName());
+        roleToUpdate.setManagePullRequests(roleDTO.getManagePullRequests());
+        roleRepository.save(roleToUpdate);
+
+        return roleToUpdate;
     }
 
     @Override
-    public Optional<RoleDTO> partialUpdate(RoleDTO roleDTO) {
+    public Optional<Role> partialUpdate(RoleDTO roleDTO) {
         log.debug("Request to partially update Role : {}", roleDTO);
 
         return roleRepository
@@ -67,27 +79,29 @@ public class RoleServiceImpl implements RoleService {
 
                 return existingRole;
             })
-            .map(roleRepository::save)
-            .map(roleMapper::toDto);
+            .map(roleRepository::save);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<RoleDTO> findAll() {
+    public List<Role> findAll() {
         log.debug("Request to get all Roles");
-        return roleRepository.findAll().stream().map(roleMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+
+        return new LinkedList<>(roleRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<RoleDTO> findOne(UUID id) {
+    public Optional<Role> findOne(UUID id) {
         log.debug("Request to get Role : {}", id);
-        return roleRepository.findById(id).map(roleMapper::toDto);
+
+        return roleRepository.findById(id);
     }
 
     @Override
     public void delete(UUID id) {
         log.debug("Request to delete Role : {}", id);
+
         roleRepository.deleteById(id);
     }
 }

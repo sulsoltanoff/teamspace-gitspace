@@ -11,6 +11,7 @@ package org.corpspace.teamspace.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.UUID;
 import javax.validation.Valid;
 import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.repository.UserRepository;
@@ -47,7 +48,7 @@ public class UserResource {
     /**
      * POST  /users : Create a new user.
      * @param userDTO the userDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new userDTO, or with status 400 (Bad Request) if the user has already an ID
+     * @return the ResponseEntity with status {@code 201 (Created)} and with body the new userDTO, or with status {@code 400 (Bad Request)} if the user has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/users")
@@ -66,13 +67,51 @@ public class UserResource {
     }
 
     /**
-     * GET /users : get all the users.
+     * GET /users : Get all the users.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all the users,
      * or with status {@code 404 (Not Found)} if there are no users
      */
     @GetMapping("/users")
-    public List<UserDTO> getAllUser() {
+    public ResponseEntity<List<User>> getAllUsers() {
         log.debug("REST request to get all User");
-        return userService.findAll();
+        return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    /**
+     * PUT /users : Updates an existing user.
+     * @param id the id of the userDTO to save
+     * @param userDTO the userDTO to update
+     * @return the ResponseEntity with status {@code 200 (OK)} and with body the updated userDTO,
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable UUID id, @Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
+        log.debug("REST request to update User : {}", userDTO);
+        if (userDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!id.equals(userDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!userRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        User result = userService.update(userDTO);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userDTO.getId().toString()))
+            .body(result);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+        log.debug("REST request to delete User : {}", id);
+        if (!userRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        userService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

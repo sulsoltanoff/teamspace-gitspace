@@ -8,10 +8,7 @@
 
 package org.corpspace.teamspace.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.repository.UserRepository;
 import org.corpspace.teamspace.service.UserService;
@@ -60,26 +57,56 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO update(UserDTO user) {
-        return null;
+    public User update(UserDTO user) {
+        log.debug("Request to update User : {}", user);
+
+        Optional<User> userEntity = userRepository.findById(user.getId());
+        if (userEntity.isEmpty()) {
+            return null;
+        }
+        User userEntityToUpdate = userEntity.get();
+        userEntityToUpdate.setFullName(user.getFullName());
+        userEntityToUpdate.setEmails(convertToEntity(user.getEmails()));
+        userEntityToUpdate.setSshKeys(convertToEntity(user.getSshKey()));
+        userEntityToUpdate.setGpgKeys(convertToEntity(user.getGpgKey()));
+        userRepository.save(userEntityToUpdate);
+        return userEntityToUpdate;
     }
 
     @Override
-    public Optional<UserDTO> partialUpdate(UserDTO user) {
-        return Optional.empty();
+    public Optional<User> partialUpdate(UserDTO user) {
+        log.debug("Request to update User : {}", user);
+
+        return userRepository
+            .findById(user.getId())
+            .map(existingUser -> {
+                userMapper.partialUpdate(existingUser, user);
+                return existingUser;
+            })
+            .map(userRepository::save);
     }
 
     @Override
-    public void delete(UUID id) {}
+    public void delete(UUID id) {
+        log.debug("Request to delete User : {}", id);
 
-    @Override
-    public UserDTO findOne(UUID id) {
-        return null;
+        userRepository.deleteById(id);
     }
 
     @Override
-    public List<UserDTO> findAll() {
-        return null;
+    @Transactional(readOnly = true)
+    public Optional<User> findOne(UUID id) {
+        log.debug("Request to get User : {}", id);
+
+        return userRepository.findById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> findAll() {
+        log.debug("Request to get all Users");
+
+        return new LinkedList<>(userRepository.findAll());
     }
 
     private <T, K> List<K> convertToEntity(List<T> dtoCollection) {

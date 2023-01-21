@@ -11,6 +11,7 @@ package org.corpspace.teamspace.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.corpspace.teamspace.domain.Role;
 import org.corpspace.teamspace.service.dto.RoleDTO;
 
 /**
@@ -23,7 +24,7 @@ public interface RoleService {
      * @param roleDTO the entity to save.
      * @return the persisted entity.
      */
-    RoleDTO save(RoleDTO roleDTO);
+    Role createRole(RoleDTO roleDTO);
 
     /**
      * Updates a role.
@@ -31,7 +32,7 @@ public interface RoleService {
      * @param roleDTO the entity to update.
      * @return the persisted entity.
      */
-    RoleDTO update(RoleDTO roleDTO);
+    Role update(RoleDTO roleDTO);
 
     /**
      * Partially updates a role.
@@ -39,14 +40,14 @@ public interface RoleService {
      * @param roleDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<RoleDTO> partialUpdate(RoleDTO roleDTO);
+    Optional<Role> partialUpdate(RoleDTO roleDTO);
 
     /**
      * Get all the roles.
      *
      * @return the list of entities.
      */
-    List<RoleDTO> findAll();
+    List<Role> findAll();
 
     /**
      * Get the "id" role.
@@ -54,7 +55,7 @@ public interface RoleService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<RoleDTO> findOne(UUID id);
+    Optional<Role> findOne(UUID id);
 
     /**
      * Delete the "id" role.
