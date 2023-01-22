@@ -20,6 +20,7 @@ import org.corpspace.teamspace.service.dto.UserDTO;
 public interface UserService {
     /**
      * Save a user.
+     *
      * @param user the entity to save.
      * @return the persisted entity.
      */
@@ -27,6 +28,7 @@ public interface UserService {
 
     /**
      * Update the users.
+     *
      * @param user the entity to update.
      * @return the persisted entity.
      */
@@ -34,6 +36,7 @@ public interface UserService {
 
     /**
      * Partial update the users.
+     *
      * @param user the entity to update.
      * @return the persisted entity.
      */
@@ -41,12 +44,14 @@ public interface UserService {
 
     /**
      * Delete the user.
+     *
      * @param id the id of the entity.
      */
     void delete(UUID id);
 
     /**
      * Find all users.
+     *
      * @param id the id of the entity.
      * @return the entity.
      */

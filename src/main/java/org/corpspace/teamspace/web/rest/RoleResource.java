@@ -75,7 +75,7 @@ public class RoleResource {
     /**
      * {@code PUT  /roles/:id} : Updates an existing role.
      *
-     * @param id the id of the roleDTO to save.
+     * @param id      the id of the roleDTO to save.
      * @param roleDTO the roleDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated roleDTO,
      * or with status {@code 400 (Bad Request)} if the roleDTO is not valid,
@@ -111,7 +111,7 @@ public class RoleResource {
     /**
      * {@code PATCH  /roles/:id} : Partial updates given fields of an existing role, field will ignore if it is null
      *
-     * @param id the id of the roleDTO to save.
+     * @param id      the id of the roleDTO to save.
      * @param roleDTO the roleDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated roleDTO,
      * or with status {@code 400 (Bad Request)} if the roleDTO is not valid,

@@ -7,7 +7,9 @@
   ~ You can obtain one at https://mozilla.org/MPL/2.0/.
   -->
 
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet author="sultan (generated)" id="1674311393600-1">
         <createTable tableName="email_address">
             <column name="id" type="UUID">
@@ -123,12 +125,21 @@
         <addUniqueConstraint columnNames="username" constraintName="UC_USERUSERNAME_COL" tableName="user"/>
     </changeSet>
     <changeSet author="sultan (generated)" id="1674311393600-12">
-        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="email_address" constraintName="FKhusshbo0ey66et4b79l9ie5ew" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="email_address"
+                                 constraintName="FKhusshbo0ey66et4b79l9ie5ew" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user"
+                                 validate="true"/>
     </changeSet>
     <changeSet author="sultan (generated)" id="1674311393600-13">
-        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="ssh_key" constraintName="FKm4eo0r2ur8dst8u9gutlxlwsq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="ssh_key"
+                                 constraintName="FKm4eo0r2ur8dst8u9gutlxlwsq" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user"
+                                 validate="true"/>
     </changeSet>
     <changeSet author="sultan (generated)" id="1674311393600-14">
-        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="gpg_key" constraintName="FKqaok31or6w5jpdp9qte7x923y" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="gpg_key"
+                                 constraintName="FKqaok31or6w5jpdp9qte7x923y" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user"
+                                 validate="true"/>
     </changeSet>
 </databaseChangeLog>

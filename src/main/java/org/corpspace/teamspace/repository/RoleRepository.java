@@ -10,7 +10,7 @@ package org.corpspace.teamspace.repository;
 
 import java.util.UUID;
 import org.corpspace.teamspace.domain.Role;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**

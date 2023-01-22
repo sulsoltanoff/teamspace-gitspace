@@ -11,7 +11,6 @@ package org.corpspace.teamspace.domain.core;
 import java.io.Serial;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;

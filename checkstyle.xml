@@ -36,12 +36,13 @@
     </module>
     <!-- For detailed checkstyle configuration, see https://github.com/spring-io/nohttp/tree/master/nohttp-checkstyle -->
     <module name="io.spring.nohttp.checkstyle.check.NoHttpCheck">
-        <property name="allowlist" value="^\Qhttp://maven.apache.org/POM/4.0.0&#10;^\Qhttp://www.w3.org/2001/XMLSchema-instance"/>
+        <property name="allowlist"
+                  value="^\Qhttp://maven.apache.org/POM/4.0.0&#10;^\Qhttp://www.w3.org/2001/XMLSchema-instance"/>
     </module>
     <!-- https://checkstyle.org/config_filters.html#SuppressionFilter -->
     <module name="SuppressionFilter">
         <property name="file" value="${org.checkstyle.google.suppressionfilter.config}"
-                  default="checkstyle-suppressions.xml" />
+                  default="checkstyle-suppressions.xml"/>
         <property name="optional" value="true"/>
     </module>
 
@@ -371,14 +372,14 @@
         <!-- https://checkstyle.org/config_filters.html#SuppressionXpathFilter -->
         <module name="SuppressionXpathFilter">
             <property name="file" value="${org.checkstyle.google.suppressionxpathfilter.config}"
-                      default="checkstyle-xpath-suppressions.xml" />
+                      default="checkstyle-xpath-suppressions.xml"/>
             <property name="optional" value="true"/>
         </module>
-        <module name="SuppressWarningsHolder" />
+        <module name="SuppressWarningsHolder"/>
         <module name="SuppressionCommentFilter">
-            <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)" />
-            <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)" />
-            <property name="checkFormat" value="$1" />
+            <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
+            <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
+            <property name="checkFormat" value="$1"/>
         </module>
         <module name="SuppressWithNearbyCommentFilter">
             <property name="commentFormat" value="CHECKSTYLE.SUPPRESS\: ([\w\|]+)"/>

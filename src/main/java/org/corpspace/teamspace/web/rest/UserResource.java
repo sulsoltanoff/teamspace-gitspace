@@ -47,6 +47,7 @@ public class UserResource {
 
     /**
      * POST  /users : Create a new user.
+     *
      * @param userDTO the userDTO to create
      * @return the ResponseEntity with status {@code 201 (Created)} and with body the new userDTO, or with status {@code 400 (Bad Request)} if the user has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
@@ -68,6 +69,7 @@ public class UserResource {
 
     /**
      * GET /users : Get all the users.
+     *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all the users,
      * or with status {@code 404 (Not Found)} if there are no users
      */
@@ -79,7 +81,8 @@ public class UserResource {
 
     /**
      * PUT /users : Updates an existing user.
-     * @param id the id of the userDTO to save
+     *
+     * @param id      the id of the userDTO to save
      * @param userDTO the userDTO to update
      * @return the ResponseEntity with status {@code 200 (OK)} and with body the updated userDTO,
      * @throws URISyntaxException if the Location URI syntax is incorrect

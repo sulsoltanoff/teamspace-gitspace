@@ -10,7 +10,7 @@ package org.corpspace.teamspace.service.mapper;
 
 import org.corpspace.teamspace.domain.Role;
 import org.corpspace.teamspace.service.dto.RoleDTO;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
 
 /**
  * Mapper for the entity {@link Role} and its DTO {@link RoleDTO}.

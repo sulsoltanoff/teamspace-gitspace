@@ -8,8 +8,6 @@
 
 package org.corpspace.teamspace.service.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.corpspace.teamspace.service.impl.RoleMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 

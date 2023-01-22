@@ -12,7 +12,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.corpspace.teamspace.GitSpaceApp;
 import org.corpspace.teamspace.config.AsyncSyncConfiguration;
 import org.corpspace.teamspace.config.EmbeddedElasticsearch;
 import org.corpspace.teamspace.config.EmbeddedKafka;

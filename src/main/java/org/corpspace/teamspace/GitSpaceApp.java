@@ -94,13 +94,13 @@ public class GitSpaceApp {
         log.info(
             CRLFLogConverter.CRLF_SAFE_MARKER,
             """
-            \n**********************************************************************
-            "Application '{}' is running! Access URLs:"
-            "Local: {}://localhost:{}{}"
-            "External: {}://{}:{}{}"
-            "Profile(s): {}
-            **********************************************************************
-            """,
+                \n**********************************************************************
+                "Application '{}' is running! Access URLs:"
+                "Local: {}://localhost:{}{}"
+                "External: {}://{}:{}{}"
+                "Profile(s): {}
+                **********************************************************************
+                """,
             env.getProperty("spring.application.name"),
             protocol,
             serverPort,
@@ -119,10 +119,10 @@ public class GitSpaceApp {
         log.info(
             CRLFLogConverter.CRLF_SAFE_MARKER,
             """
-            \n**********************************************************************
-            "Config Server: {}
-            **********************************************************************
-            """,
+                \n**********************************************************************
+                "Config Server: {}
+                **********************************************************************
+                """,
             configServerStatus
         );
     }
