@@ -422,6 +422,11 @@
             <artifactId>org.eclipse.jgit</artifactId>
             <version>5.12.0.202106070339-r</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.7.3</version>
+        </dependency>
     </dependencies>
 
     <build>
