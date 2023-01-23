@@ -11,8 +11,10 @@ package org.corpspace.teamspace.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import javax.validation.Valid;
+import org.corpspace.teamspace.domain.SshKey;
 import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.repository.UserRepository;
 import org.corpspace.teamspace.service.dto.UserDTO;
@@ -21,12 +23,15 @@ import org.corpspace.teamspace.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import tech.jhipster.web.util.HeaderUtil;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/users")
 public class UserResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
@@ -52,7 +57,7 @@ public class UserResource {
      * @return the ResponseEntity with status {@code 201 (Created)} and with body the new userDTO, or with status {@code 400 (Bad Request)} if the user has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/users")
+    @PostMapping("/")
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
@@ -73,7 +78,7 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all the users,
      * or with status {@code 404 (Not Found)} if there are no users
      */
-    @GetMapping("/users")
+    @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {
         log.debug("REST request to get all User");
         return ResponseEntity.ok(userRepository.findAll());
@@ -87,7 +92,7 @@ public class UserResource {
      * @return the ResponseEntity with status {@code 200 (OK)} and with body the updated userDTO,
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/users/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable UUID id, @Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to update User : {}", userDTO);
         if (userDTO.getId() == null) {
@@ -108,13 +113,38 @@ public class UserResource {
             .body(result);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         log.debug("REST request to delete User : {}", id);
+
         if (!userRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
         userService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<Optional<User>> getUser() {
+        log.debug("REST request to get current user");
+
+        Optional<User> user = userService.getMyProfile();
+        if (user.isEmpty()) throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/{id}/access-token")
+    public ResponseEntity<String> getAccessToken(@PathVariable UUID id) {
+        log.debug("REST request to get access token for user {}", id);
+        Optional<User> user = userService.findOne(id);
+        return ResponseEntity.ok(user.map(User::getAccessToken).orElse(null));
+    }
+
+    @GetMapping("/{id}/ssh-keys")
+    public ResponseEntity<List<SshKey>> getSshKeys(@PathVariable UUID id) {
+        log.debug("REST request to get ssh keys for user {}", id);
+        Optional<User> user = userService.findOne(id);
+        return ResponseEntity.ok(user.map(User::getSshKeys).orElse(null));
     }
 }

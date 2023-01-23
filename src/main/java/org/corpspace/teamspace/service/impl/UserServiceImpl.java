@@ -11,6 +11,7 @@ package org.corpspace.teamspace.service.impl;
 import java.util.*;
 import org.corpspace.teamspace.domain.User;
 import org.corpspace.teamspace.repository.UserRepository;
+import org.corpspace.teamspace.security.SecurityUtils;
 import org.corpspace.teamspace.service.UserService;
 import org.corpspace.teamspace.service.dto.UserDTO;
 import org.slf4j.Logger;
@@ -107,6 +108,14 @@ public class UserServiceImpl implements UserService {
         log.debug("Request to get all Users");
 
         return new LinkedList<>(userRepository.findAll());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> getMyProfile() {
+        log.debug("Request to get my profile");
+
+        return userRepository.findByUsername(SecurityUtils.getCurrentUserLogin().orElse(null));
     }
 
     private <T, K> List<K> convertToEntity(List<T> dtoCollection) {

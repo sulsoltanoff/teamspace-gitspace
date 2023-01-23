@@ -63,4 +63,9 @@ public interface UserService {
      * @return the find all entity.
      */
     List<User> findAll();
+
+    /**
+     * @return the current user.
+     */
+    Optional<User> getMyProfile();
 }
