@@ -14,17 +14,17 @@
     <a href="">
         <img src="https://img.shields.io/github/last-commit/sulsoltanoff/teamspace-gitspace" alt="last update" />
     </a>
-    <a href="https://github.com/sulsoltanoff/awesome-readme-template/issues/">
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/issues/">
         <img src="https://img.shields.io/github/issues/sulsoltanoff/teamspace-gitspace" alt="open issues" />
     </a>
-    <a href="">
-        <img src="https://img.shields.io/github/actions/workflow/status/sulsoltanoff/teamspace-gitspace/codeql.yml" />
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/actions/workflows/codeql.yml">
+        <img src="https://img.shields.io/github/actions/workflow/status/sulsoltanoff/teamspace-gitspace/codeql.yml"  alt=""/>
     </a>
     <a>
-        <img src="https://img.shields.io/github/v/tag/sulsoltanoff/teamspace-gitspace?include_prereleases&sort=semver" />
+        <img src="https://img.shields.io/github/v/tag/sulsoltanoff/teamspace-gitspace?include_prereleases&sort=semver"  alt=""/>
     </a>
     <a>
-        <img src="https://img.shields.io/github/languages/code-size/sulsoltanoff/teamspace-gitspace" />
+        <img src="https://img.shields.io/github/languages/code-size/sulsoltanoff/teamspace-gitspace"  alt=""/>
     </a>
     <a href="https://github.com/sulsoltanoff/teamspace-gitspace/blob/main/LICENSE">
         <img src="https://img.shields.io/github/license/sulsoltanoff/teamspace-gitspace.svg" alt="license" />
@@ -34,9 +34,9 @@
 <h4>
     <a href="https://github.com/sulsoltanoff/teamspace-gitspace">Documentation</a>
   <span> · </span>
-    <a href="https://github.com/sulsoltanoff/ateamspace-gitspace/issues/">Report Bug</a>
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/issues/new?assignees=&labels=Type%3A+Bug+%3Acry%3A&template=bug-report.md&title=">Report Bug</a>
   <span> · </span>
-    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/issues/">Request Feature</a>
+    <a href="https://github.com/sulsoltanoff/teamspace-gitspace/issues/new?assignees=&labels=Type%3A+Enhancement+%3Arocket%3A&template=feature-request.md&title=">Request Feature</a>
   </h4>
 </div>
 
@@ -53,18 +53,15 @@ It empowers developers and teams to work more efficiently, increasing productivi
   - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Installation](#gear-installation)
+  - [Installation](#installation)
   - [Running Tests](#running-tests)
-  - [Run Locally](#running-run-locally)
-  - [Deployment](#triangular_flag_on_post-deployment)
-- [Usage](#eyes-usage)
-- [Roadmap](#compass-roadmap)
-- [Contributing](#wave-contributing)
-  - [Code of Conduct](#scroll-code-of-conduct)
-- [FAQ](#grey_question-faq)
-- [License](#warning-license)
-- [Contact](#handshake-contact)
-- [Acknowledgements](#gem-acknowledgements)
+  - [API first develop](#doing-api-first-development-using-openapi-generator-cli)
+- [Building for production](#building-for-production)
+  - [Packaging as jar](#packaging-as-jar)
+  - [Packaging as war](#packaging-as-war)
+  - [Code quality](#code-quality)
+- [Docker, kubernetes and etc](#docker-kubernetes-and-etc) -[Using Docker for development](#using-docker-for-development)
+- [License](#license)
 
 ## :star2: About the Project
 
@@ -73,16 +70,8 @@ It empowers developers and teams to work more efficiently, increasing productivi
 Node is required for generation and recommended for development. `package.json` is always generated for a better
 development experience with prettier, commit hooks, scripts and so on.
 
-`/src/*` structure follows default Java structure.
-
-- `.yo-rc.json` - Yeoman configuration file
-  JHipster configuration is stored in this file at `generator-jhipster` key. You may find `generator-jhipster-*` for
-  specific blueprints configuration.
-- `.yo-resolve` (optional) - Yeoman conflict resolver
-  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line
-  should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch)
-  pattern and action been one of skip (default if ommited) or force. Lines starting with `#` are considered comments and
-  are ignored.
+- `/src/main/java` - Main Java source code.
+- `/src/main/test` - Test source code
 - `/src/main/docker` - Docker configurations for the application and services that the application depends on
 
 ### Tech Stack
@@ -148,13 +137,21 @@ npm run app:start
 
 ### Running Tests
 
-For run Unit test
+To launch your application's tests, run:
+
+```bash
+./mvnw verify
+```
 
 ```bash
 npm run backend:unit:test
 npm run ci:backend:test
 ./mvnw verify
 ```
+
+Performance tests are run by Gatling and written in Scala. They're located in [src/test/gatling](src/test/gatling).
+To use those tests, you must install Gatling from [https://gatling.io/](https://gatling.io/).
+For more information, refer to the Running tests page. For run Unit test
 
 ### Doing API-First development using openapi-generator-cli
 
@@ -170,8 +167,6 @@ Then implements the generated delegate classes with `@Service` classes.
 To edit the `api.yml` definition file, you can use a tool such as [Swagger-Editor](). Start a local instance of the
 swagger-editor using docker by running: `docker-compose -f src/main/docker/swagger-editor.yml up -d`. The editor will
 then be reachable at [http://localhost:7742](http://localhost:7742).
-
-Refer to [Doing API-First development][] for more details.
 
 ## Building for production
 
@@ -196,22 +191,6 @@ To package your application as a war in order to deploy it to an application ser
 ```
 ./mvnw -Pprod,war clean verify
 ```
-
-## Testing
-
-To launch your application's tests, run:
-
-```
-./mvnw verify
-```
-
-### Other tests
-
-Performance tests are run by [Gatling][] and written in Scala. They're located in [src/test/gatling](src/test/gatling).
-
-To use those tests, you must install Gatling from [https://gatling.io/](https://gatling.io/).
-
-For more information, refer to the [Running tests page][].
 
 ### Code quality
 
@@ -243,9 +222,11 @@ are loaded from the sonar-project.properties file.
 
 For more information, refer to the [Code quality page][].
 
-## Using Docker to simplify development (optional)
+## Docker, kubernetes and etc
 
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are
+### Using Docker for development
+
+You can use Docker to improve your development experience. A number of docker-compose configuration are
 available in the [src/main/docker](src/main/docker) folder to launch required third party services.
 
 For example, to start a postgresql database in a docker container, run:
@@ -260,14 +241,14 @@ To stop it and remove the container, run:
 docker-compose -f src/main/docker/postgresql.yml down
 ```
 
-You can also fully dockerize your application and all the services that it depends on.
+You can also fully dockerized your application and all the services that it depends on.
 To achieve this, first build a docker image of your app by running:
 
 ```
 npm run java:docker
 ```
 
-Or build a arm64 docker image when using an arm64 processor os like MacOS with M1 processor family running:
+Or build an arm64 docker image when using an arm64 processor os like macOS with M1 processor family running:
 
 ```
 npm run java:docker:arm64
@@ -279,33 +260,11 @@ Then run:
 docker-compose -f src/main/docker/app.yml up -d
 ```
 
-When running Docker Desktop on MacOS Big Sur or later, consider enabling
+When running Docker Desktop on macOS Big Sur or later, consider enabling
 experimental `Use the new Virtualization framework` for better processing
 performance ([disk access performance is worse](https://github.com/docker/roadmap/issues/7)).
 
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the
-docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or
-several JHipster applications.
+## License
 
-## Continuous Integration (optional)
-
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate
-configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][]
-page for more information.
-
-[jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 7.9.3 archive]: https://www.jhipster.tech/documentation-archive/v7.9.3
-[doing microservices with jhipster]: https://www.jhipster.tech/documentation-archive/v7.9.3/microservices-architecture/
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.9.3/development/
-[service discovery and configuration with the jhipster-registry]: https://www.jhipster.tech/documentation-archive/v7.9.3/microservices-architecture/#jhipster-registry
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v7.9.3/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v7.9.3/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v7.9.3/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v7.9.3/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v7.9.3/setting-up-ci/
-[node.js]: https://nodejs.org/
-[npm]: https://www.npmjs.com/
-[gatling]: https://gatling.io/
-[openapi-generator]: https://openapi-generator.tech
-[swagger-editor]: https://editor.swagger.io
-[doing api-first development]: https://www.jhipster.tech/documentation-archive/v7.9.3/doing-api-first-development/
+Distributed Mozilla Public License Version 2.0
+See LICENSE for more information.
