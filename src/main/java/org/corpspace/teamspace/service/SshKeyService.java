@@ -8,30 +8,30 @@
 
 package org.corpspace.teamspace.service;
 
-import org.corpspace.teamspace.domain.User;
+import org.corpspace.teamspace.domain.SshKey;
+import org.corpspace.teamspace.service.dto.SshKeyDTO;
 
 public interface SshKeyService {
     /**
      * Get the public key for the given user.
      *
-     * @param name  The name of the key.
-     * @param owner The user to get the key for.
-     * @return The public key.
+     * @param sshKeyDTO the ssh key dto.
+     * @return The public key entity.
      */
-    String createKey(String name, User owner);
+    SshKey createKey(SshKeyDTO sshKeyDTO);
 
     /**
      * Get the public key for the given user.
      *
-     * @param name The name of the key.
-     * @return The public key.
+     * @param sshKeyDTO the ssh key dto.
+     * @return The public key entity.
      */
-    String getKey(String name);
+    SshKey getKey(SshKeyDTO sshKeyDTO);
 
     /**
      * Delete the key for the given user.
      *
-     * @param name The user name.
+     * @param sshKeyDTO The public key dto.
      */
-    void deleteKey(String name);
+    void deleteKey(SshKeyDTO sshKeyDTO);
 }

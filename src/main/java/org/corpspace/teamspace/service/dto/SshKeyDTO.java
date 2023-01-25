@@ -20,7 +20,7 @@ public class SshKeyDTO implements Serializable {
 
     @Getter
     @Setter
-    private UUID id;
+    private UUID keyId;
 
     @Getter
     @Setter
@@ -28,5 +28,5 @@ public class SshKeyDTO implements Serializable {
 
     @Getter
     @Setter
-    private String owner;
+    private UUID ownerId;
 }

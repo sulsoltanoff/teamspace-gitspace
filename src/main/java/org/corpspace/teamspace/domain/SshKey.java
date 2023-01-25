@@ -37,5 +37,7 @@ public class SshKey extends AbstractAuditingEntity<SshKey> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
+    @Getter
+    @Setter
     private User owner;
 }
